@@ -1,3 +1,6 @@
+from vertex import Vertex
+
+
 class Edge:
 
     def __init__(self, head, tail):
@@ -34,3 +37,6 @@ class Edge:
         if not isinstance(other, Edge):
             raise Exception(str(other) + ' is not and instance of ' + self.__class__.__name__)
         return other.value >= self.value
+
+    def __str__(self):
+        return 'Head: ' + str(self.head) + ' Tail: ' + str(self.tail)
