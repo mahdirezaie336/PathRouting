@@ -32,5 +32,11 @@ with open(map_path, 'r') as map_file:
         get_vertex(id2).adjacent_vertices.append(id1)
 
 
+heapq.heapify(graph)
 for i in graph:
     print(i)
+
+# Getting commands
+while True:
+    hash_table = {i.identity: i for i in graph}
+

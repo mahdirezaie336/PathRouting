@@ -15,6 +15,9 @@ class Edge:
             return False
         return other.value == self.value
 
+    def __hash__(self) -> int:
+        return hash(self.value)
+
     def __ne__(self, other):
         return not self.__eq__(other)
 

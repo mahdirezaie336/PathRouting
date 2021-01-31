@@ -12,7 +12,10 @@ class Vertex:
             return True
         if not isinstance(other, Vertex):
             return False
-        return other.value == self.value
+        return other.identity == self.identity
+
+    def __hash__(self) -> int:
+        return hash(self.identity)
 
     def __ne__(self, other):
         return not self.__eq__(other)
