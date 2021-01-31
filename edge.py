@@ -1,6 +1,3 @@
-from vertex import Vertex
-
-
 class Edge:
 
     def __init__(self, head, tail):
