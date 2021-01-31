@@ -11,12 +11,12 @@ def get_vertex(Id):
     for i in graph:
         if i.identity == Id:
             return i
-        raise Exception('From rounting program: Vertex not found!')
+    raise Exception('From rounting program: Vertex not found!')
 
 
 # Reading map file
 with open(map_path, 'r') as map_file:
-    n, m = map_file.readline().split()
+    n, m = [int(i) for i in map_file.readline().split()]
     graph = [0]*n
 
     # Reading vertices
@@ -32,4 +32,5 @@ with open(map_path, 'r') as map_file:
         get_vertex(id2).adjacent_vertices.append(id1)
 
 
-
+for i in graph:
+    print(i)
