@@ -4,20 +4,19 @@ from edge import Edge
 
 
 map_path = './map.txt'
-graph = []
 
 
 def get_vertex(Id):
     for i in graph:
         if i.identity == Id:
             return i
-    raise Exception('From rounting program: Vertex not found!')
+    raise Exception('From routing program: Vertex not found!')
 
 
 # Reading map file
 with open(map_path, 'r') as map_file:
     n, m = [int(i) for i in map_file.readline().split()]
-    graph = [0]*n
+    graph = [Vertex(0, 0, 0)]*n
 
     # Reading vertices
     for i in range(n):
@@ -39,4 +38,4 @@ for i in graph:
 # Getting commands
 while True:
     hash_table = {i.identity: i for i in graph}
-
+    print(hash_table)
