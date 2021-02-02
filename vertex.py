@@ -7,7 +7,8 @@ class Vertex:
         self.x = x
         self.y = y
         self.adjacent_vertices = []
-        self.value = 0
+        self.value = 0.0
+        self.prev = None
 
     def __eq__(self, other):
         if other == self:
@@ -44,4 +45,5 @@ class Vertex:
 
     def __str__(self):
         return '[' + str(self.identity) + ', ' + str(self.x) + ', ' + \
-               str(self.y) + ', ' + str(self.adjacent_vertices) + ']'
+                str(self.y) + ', ' + str(self.adjacent_vertices) + ']' + \
+                ' Value: ' + str(self.value)
