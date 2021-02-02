@@ -6,10 +6,25 @@ class MinHeap:
         self.make_heap()
 
     def make_heap(self):
-        for i in range(len(self.array) // 2 - 1, -1, -1):
+        for i in range(len(self.array) // 2).__reversed__():
             self.min_heapify(i)
         for index, vertex in enumerate(self.array):
             self.index_table[vertex.identity] = index
+
+    def add(self, vertex):
+        index = len(self.array)
+        self.array.append(vertex)
+        self.min_up_heapify(index)
+        self.index_table[vertex.identity] = index
+
+    def remove(self, vertex_id):
+        index = self.index_table[vertex_id]
+        last_item = self.array[-1]
+        self.index_table[last_item] = index
+        del self.array[-1]
+        self.array[index] = last_item
+        self.min_heapify(index)
+        self.min_up_heapify(index)
 
     def min_heapify(self, i):
         # Makes a heap when the item with index i has a right and left
