@@ -7,7 +7,7 @@ class Vertex:
         self.x = x
         self.y = y
         self.adjacent_vertices = []
-        self.value = 0.0
+        self.value = float('inf')
         self.prev = None
 
     def __eq__(self, other):
