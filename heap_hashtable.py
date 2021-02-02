@@ -16,10 +16,17 @@ class MinHeap:
         # subtrees which both are heaps.
         le = self.left(i)
         ri = self.right(i)
-        largest = self.minimum(le, ri, i)
-        if largest != i:
-            self.swap(i, largest)
-            self.min_heapify(largest)
+        smallest = self.minimum(le, ri, i)
+        if smallest != i:
+            self.swap(i, smallest)
+            self.min_heapify(smallest)
+
+    def min_up_heapify(self, i):
+        pa = self.parent(i)
+        smallest = self.minimum(pa, i)
+        if smallest != pa:
+            self.swap(i, smallest)
+            self.min_up_heapify(smallest)
 
     def right(self, i):
         ri = 2 * i + 2
@@ -33,9 +40,11 @@ class MinHeap:
             return ri
         return i
 
-    @staticmethod
-    def parent(i):
-        return (i - 1) // 2
+    def parent(self, i):
+        pa = (i - 1) // 2
+        if pa < 0 or len(self.array) == 0:
+            return 0
+        return pa
 
     def swap(self, i, j):
         temp = self.array[i]
