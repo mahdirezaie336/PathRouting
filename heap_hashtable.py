@@ -1,3 +1,6 @@
+import time
+
+
 class MinHeap:
 
     def __init__(self, array=[], index_table={}):
@@ -14,15 +17,19 @@ class MinHeap:
     def add(self, vertex):
         index = len(self.array)
         self.array.append(vertex)
-        self.min_up_heapify(index)
         self.index_table[vertex.identity] = index
+        self.min_up_heapify(index)
 
-    def remove(self, vertex_id):
-        index = self.index_table[vertex_id]
+    def remove(self, vertex_id=None, index=None):
+        if index is None:
+            index = self.index_table[vertex_id]
         last_item = self.array[-1]
         self.index_table[last_item] = index
-        del self.array[-1]
         self.array[index] = last_item
+
+        del self.index_table[vertex_id]
+        del self.array[-1]
+
         self.min_heapify(index)
         self.min_up_heapify(index)
 
@@ -39,9 +46,12 @@ class MinHeap:
     def min_up_heapify(self, i):
         pa = self.parent(i)
         smallest = self.minimum(pa, i)
+        self.print()
+        print()
+        time.sleep(2)
         if smallest != pa:
-            self.swap(i, smallest)
-            self.min_up_heapify(smallest)
+            self.swap(pa, i)
+            self.min_up_heapify(pa)
 
     def right(self, i):
         ri = 2 * i + 2
@@ -57,7 +67,7 @@ class MinHeap:
 
     def parent(self, i):
         pa = (i - 1) // 2
-        if pa < 0 or len(self.array) == 0:
+        if pa < 0:
             return 0
         return pa
 
@@ -66,13 +76,19 @@ class MinHeap:
         self.array[i] = self.array[j]
         self.array[j] = temp
 
+        self.index_table[self.array[i].identity] = i
+        self.index_table[self.array[j].identity] = j
+
     def minimum(self, *index):
         smallest = index[0]
         for i in index:
-            if i < len(self.array):
-                if self.array[i] < self.array[smallest]:
-                    smallest = i
+            if self.array[i] < self.array[smallest]:
+                smallest = i
         return smallest
 
     def __str__(self):
         return self.array.__str__()
+
+    def print(self):
+        for i in self.array:
+            print(i)

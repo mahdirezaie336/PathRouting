@@ -2,17 +2,15 @@ class Vertex:
 
     identity: int
 
-    def __init__(self, identity, y, x):
+    def __init__(self, identity, y, x, value=float('inf')):
         self.identity = identity
         self.x = x
         self.y = y
         self.adjacent_vertices = []
-        self.value = float('inf')
+        self.value = value
         self.prev = None
 
     def __eq__(self, other):
-        if other == self:
-            return True
         if not isinstance(other, Vertex):
             return False
         return other.identity == self.identity

@@ -32,11 +32,16 @@ with open(map_path, 'r') as map_file:
         get_vertex(id1).adjacent_vertices.append(id2)
         get_vertex(id2).adjacent_vertices.append(id1)
 
-sizes = [1, 2, 6, 4, 3]
+sizes = [100, 250, 1, 3, 2, 6]
 for i, value in enumerate(sizes):
     graph[i].value = value
+
 heap = MinHeap(deepcopy(graph))
+vv = Vertex(45, 1.0011, 1.0011, 0)
+heap.add(vv)
 for i in heap.array:
     print(i)
+print('Dictionary of heap is:', heap.index_table)
+
 heapq.heapify(sizes)
-print(sizes)
+print('Sizes after heapify is:', sizes)
