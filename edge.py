@@ -1,4 +1,5 @@
 from vertex import Vertex
+from constants import Constants
 
 
 class Edge:
@@ -11,6 +12,14 @@ class Edge:
         self.tail = tail
         self.weight = 0
         self.users = []
+
+    def get_weight(self):
+        x1 = self.head.x
+        x2 = self.tail.x
+        y1 = self.head.y
+        y2 = self.tail.y
+        length = ((x1 - x2)**2 + (y1 - y2)**2)**0.5
+        return length * (1 + Constants.traffic_factor * len(self.users))
 
     def __eq__(self, other):
         if other == self:

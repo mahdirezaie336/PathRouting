@@ -6,6 +6,9 @@ from constants import Constants
 import heapq
 
 
+users = []
+
+
 def get_vertex(Id):
     for i in graph:
         if i.identity == Id:
@@ -17,6 +20,7 @@ def get_vertex(Id):
 with open(Constants.map_path, 'r') as map_file:
     n, m = [int(i) for i in map_file.readline().split()]
     graph = [Vertex(0, 0, 0)] * n
+    roads = {}
 
     # Reading vertices
     for i in range(n):
@@ -29,16 +33,11 @@ with open(Constants.map_path, 'r') as map_file:
         id1, id2 = (int(i) for i in map_file.readline().split())
         get_vertex(id1).adjacent_vertices.append(id2)
         get_vertex(id2).adjacent_vertices.append(id1)
+        edge = Edge(id1, id2)
+        roads[id1, id2] = edge
+        roads[id2, id1] = edge
 
-sizes = [100, 250, 1, 3, 2, 6]
-for i, value in enumerate(sizes):
-    graph[i].value = value
 
-heap = MinHeap(deepcopy(graph))
-for i in heap.array:
-    print(i)
-print()
-heap.modify(35, 0)
-for i in heap.array:
-    print(i)
-print()
+while True:
+    vertices = deepcopy(graph)
+    edges = deepcopy(roads)
