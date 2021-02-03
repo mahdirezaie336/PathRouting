@@ -1,6 +1,3 @@
-import time
-
-
 class MinHeap:
 
     def __init__(self, array=[], index_table={}):
@@ -46,9 +43,6 @@ class MinHeap:
     def min_up_heapify(self, i):
         pa = self.parent(i)
         smallest = self.minimum(pa, i)
-        self.print()
-        print()
-        time.sleep(2)
         if smallest != pa:
             self.swap(pa, i)
             self.min_up_heapify(pa)
@@ -88,7 +82,3 @@ class MinHeap:
 
     def __str__(self):
         return self.array.__str__()
-
-    def print(self):
-        for i in self.array:
-            print(i)
