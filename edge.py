@@ -10,6 +10,7 @@ class Edge:
         self.head = head
         self.tail = tail
         self.weight = 0
+        self.users = []
 
     def __eq__(self, other):
         if other == self:

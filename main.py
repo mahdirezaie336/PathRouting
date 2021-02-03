@@ -2,10 +2,8 @@ from heap_hashtable import MinHeap
 from vertex import *
 from edge import Edge
 from copy import deepcopy
+from constants import Constants
 import heapq
-
-
-map_path = './map.txt'
 
 
 def get_vertex(Id):
@@ -16,7 +14,7 @@ def get_vertex(Id):
 
 
 # Reading map file
-with open(map_path, 'r') as map_file:
+with open(Constants.map_path, 'r') as map_file:
     n, m = [int(i) for i in map_file.readline().split()]
     graph = [Vertex(0, 0, 0)] * n
 
