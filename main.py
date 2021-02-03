@@ -37,11 +37,10 @@ for i, value in enumerate(sizes):
     graph[i].value = value
 
 heap = MinHeap(deepcopy(graph))
-vv = Vertex(45, 1.0011, 1.0011, 0)
-heap.add(vv)
 for i in heap.array:
     print(i)
-print('Dictionary of heap is:', heap.index_table)
-
-heapq.heapify(sizes)
-print('Sizes after heapify is:', sizes)
+print()
+heap.modify(35, 0)
+for i in heap.array:
+    print(i)
+print()

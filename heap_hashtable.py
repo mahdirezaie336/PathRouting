@@ -30,6 +30,12 @@ class MinHeap:
         self.min_heapify(index)
         self.min_up_heapify(index)
 
+    def modify(self, vertex_id, new_value):
+        index = self.index_table[vertex_id]
+        self.array[index].value = new_value
+        self.min_up_heapify(index)
+        self.min_heapify(index)
+
     def min_heapify(self, i):
         # Makes a heap when the item with index i has a right and left
         # subtrees which both are heaps.
