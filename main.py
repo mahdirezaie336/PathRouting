@@ -122,20 +122,20 @@ while True:
         for user in edges[e].users:
             for point in user.path:
                 if point == edges[e].tail:
-                    x0 = edges[e].tail.x
-                    y0 = edges[e].tail.y
-                    x1 = edges[e].head.x
-                    y1 = edges[e].head.y
+                    x1 = edges[e].tail.x
+                    y1 = edges[e].tail.y
+                    x0 = edges[e].head.x
+                    y0 = edges[e].head.y
                     x = (x0 - x1) * user.remain_time/120/edges[e].get_weight() + x1
                     y = (y0 - y1) * user.remain_time/120/edges[e].get_weight() + y1
                     plt.plot(x, y, marker='v', color='g')
                     plt.annotate('UID:' + str(user.UID), (x, y), fontsize=6)
                     break
                 elif point == edges[e].head:
-                    x1 = edges[e].tail.x
-                    y1 = edges[e].tail.y
-                    x0 = edges[e].head.x
-                    y0 = edges[e].head.y
+                    x0 = edges[e].tail.x
+                    y0 = edges[e].tail.y
+                    x1 = edges[e].head.x
+                    y1 = edges[e].head.y
                     x = (x0 - x1) * user.remain_time/120/edges[e].get_weight() + x1
                     y = (y0 - y1) * user.remain_time/120/edges[e].get_weight() + y1
                     plt.plot(x, y, marker='v', color='g')
