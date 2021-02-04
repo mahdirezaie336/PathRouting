@@ -9,12 +9,8 @@ import matplotlib.pyplot as plt
 
 users = []
 graph = []
-verts = {}
+graph_dict = {}
 roads = {}
-
-
-def get_vertex(Id):
-    return verts[Id]
 
 
 # Reading map file
@@ -27,14 +23,14 @@ with open(Constants.map_path, 'r') as map_file:
         identity = int(identity)
         vertex = Vertex(identity, y, x)
         graph.append(vertex)
-        verts[identity] = vertex
+        graph_dict[identity] = vertex
 
     # Reading edges
     for i in range(m):
         id1, id2 = (int(i) for i in map_file.readline().split())
-        get_vertex(id1).adjacent_vertices.append(id2)
-        get_vertex(id2).adjacent_vertices.append(id1)
-        edge = Edge(get_vertex(id1), get_vertex(id2))
+        graph_dict[id1].adjacent_vertices.append(id2)
+        graph_dict[id2].adjacent_vertices.append(id1)
+        edge = Edge(graph_dict[id1], graph_dict[id2])
         roads[id1, id2] = edge
         roads[id2, id1] = edge
 
@@ -130,14 +126,20 @@ while True:
                     y0 = edges[e].tail.y
                     x1 = edges[e].head.x
                     y1 = edges[e].head.y
+                    x = (x0 - x1) * user.remain_time/120/edges[e].get_weight() + x1
+                    y = (y0 - y1) * user.remain_time/120/edges[e].get_weight() + y1
+                    plt.plot(x, y, marker='v', color='g')
+                    plt.annotate('UID:' + str(user.UID), (x, y), fontsize=6)
+                    break
                 elif point == edges[e].head:
                     x1 = edges[e].tail.x
                     y1 = edges[e].tail.y
                     x0 = edges[e].head.x
                     y0 = edges[e].head.y
-            x = (x0 - x1) * user.remain_time/120/edges[e].get_weight() + x1
-            y = (y0 - y1) * user.remain_time/120/edges[e].get_weight() + y1
-            plt.plot(x, y, marker='v', color='g')
-            plt.annotate('UID:' + str(user.UID), (x, y), fontsize=6)
+                    x = (x0 - x1) * user.remain_time/120/edges[e].get_weight() + x1
+                    y = (y0 - y1) * user.remain_time/120/edges[e].get_weight() + y1
+                    plt.plot(x, y, marker='v', color='g')
+                    plt.annotate('UID:' + str(user.UID), (x, y), fontsize=6)
+                    break
 
     plt.show()
