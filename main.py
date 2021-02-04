@@ -5,6 +5,7 @@ from copy import deepcopy
 from constants import Constants
 from user import User
 import heapq
+import time
 
 
 users = []
@@ -34,7 +35,7 @@ with open(Constants.map_path, 'r') as map_file:
         id1, id2 = (int(i) for i in map_file.readline().split())
         get_vertex(id1).adjacent_vertices.append(id2)
         get_vertex(id2).adjacent_vertices.append(id1)
-        edge = Edge(id1, id2)
+        edge = Edge(get_vertex(id1), get_vertex(id2))
         roads[id1, id2] = edge
         roads[id2, id1] = edge
 
@@ -44,6 +45,7 @@ while True:
     edges = deepcopy(roads)
     heap = MinHeap(vertices)
 
+    print('Enter "time start_id end_id": ', end=' ')
     time, start_id, end_id = [float(i) for i in input().split()]
     start_id = int(start_id)
     end_id = int(end_id)
@@ -70,16 +72,21 @@ while True:
     last_node = None
     while end_id in heap:
         current = heap.pop()
-        for neighbour in current.adjacent_vertices:
-            edge_weight = edges[current.identity, neighbour.identity].get_weight()
+        for neighbour_id in current.adjacent_vertices:
+            if neighbour_id not in heap:
+                continue
+            neighbour = heap.get_vertex(neighbour_id)
+            edge_weight = edges[current.identity, neighbour_id].get_weight()
             if current.value + edge_weight < neighbour.value:
-                neighbour.value = edge_weight + current.value
+                heap.modify(neighbour_id, edge_weight + current.value)
                 neighbour.prev = current
         last_node = current
 
     def set_user_path(vertex):
-        if vertex is not None:
+        if vertex.prev is not None:
             set_user_path(vertex.prev)
         users[-1].path.append(vertex)
 
     set_user_path(last_node)
+    users[-1].duration_time = last_node.value
+    users[-1].print()

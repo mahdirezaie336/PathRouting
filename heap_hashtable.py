@@ -21,14 +21,15 @@ class MinHeap:
         if index is None:
             index = self.index_table[vertex_id]
         last_item = self.array[-1]
-        self.index_table[last_item] = index
+        self.index_table[last_item.identity] = index
         self.array[index] = last_item
 
         del self.index_table[vertex_id]
         del self.array[-1]
 
-        self.min_heapify(index)
-        self.min_up_heapify(index)
+        if len(self.array) != 0:
+            self.min_heapify(index)
+            self.min_up_heapify(index)
 
     def modify(self, vertex_id, new_value):
         index = self.index_table[vertex_id]
@@ -40,6 +41,13 @@ class MinHeap:
         root = self.array[0]
         self.remove(self.array[0].identity, 0)
         return root
+
+    def value_of(self, vertex_id):
+        return self.array[self.index_table[vertex_id]].value
+
+    def get_vertex(self, vertex_id):
+        index = self.index_table[vertex_id]
+        return self.array[index]
 
     def min_heapify(self, i):
         # Makes a heap when the item with index i has a right and left
@@ -96,3 +104,9 @@ class MinHeap:
 
     def __contains__(self, vertex_id):
         return vertex_id in self.index_table
+
+    def print(self):
+        for i in self.array:
+            print(i)
+        print(self.index_table)
+        print()
