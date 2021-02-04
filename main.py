@@ -99,9 +99,10 @@ while True:
             x2 = edges[e].tail.x
             y1 = edges[e].head.y
             y2 = edges[e].tail.y
-            plt.plot([x1, x2], [y1, y2], marker='o', color='#AAAAAA')
-            plt.annotate(str(edges[e].head.identity), (x1, y1), font='Arial')
-            plt.annotate(str(edges[e].tail.identity), (x2, y2), font='Arial')
+            plt.plot([x1, x2], [y1, y2], marker='o', color='#d8d8d8',
+                     markerfacecolor='#1f77b4', markersize=5, markeredgewidth=0)
+            plt.annotate(str(edges[e].head.identity), (x1, y1), fontsize=8)
+            plt.annotate(str(edges[e].tail.identity), (x2, y2), fontsize=8)
         odd = not odd
 
     for i in range(len(users[-1].path) - 1):
