@@ -3,6 +3,7 @@ from vertex import *
 from edge import Edge
 from copy import deepcopy
 from constants import Constants
+from user import User
 import heapq
 
 
@@ -41,3 +42,44 @@ with open(Constants.map_path, 'r') as map_file:
 while True:
     vertices = deepcopy(graph)
     edges = deepcopy(roads)
+    heap = MinHeap(vertices)
+
+    time, start_id, end_id = [float(i) for i in input().split()]
+    start_id = int(start_id)
+    end_id = int(end_id)
+    users.append(User(len(users), time, start_id, end_id))
+
+    # Putting each user on their ways
+    for user in range(len(users) - 1):
+        edge_to_put = None
+        user_time = user.time
+        # Moving on user path
+        for i in range(len(user.path) - 1):
+            id1 = user.path[i].identity
+            id2 = user.path[i + 1].identity
+            edge = edges[id1, id2]
+            if user_time <= edge.get_weight() * 120:
+                edge_to_put = edge
+                break
+            user_time -= edge.get_weight()
+        if edge_to_put is not None:
+            edge_to_put.users.append(user)
+
+    # Finding best way for the last user using Dijkstra algorithm
+    heap.modify(start_id, 0)
+    last_node = None
+    while end_id in heap:
+        current = heap.pop()
+        for neighbour in current.adjacent_vertices:
+            edge_weight = edges[current.identity, neighbour.identity].get_weight()
+            if current.value + edge_weight < neighbour.value:
+                neighbour.value = edge_weight + current.value
+                neighbour.prev = current
+        last_node = current
+
+    def set_user_path(vertex):
+        if vertex is not None:
+            set_user_path(vertex.prev)
+        users[-1].path.append(vertex)
+
+    set_user_path(last_node)

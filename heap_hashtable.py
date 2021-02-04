@@ -36,6 +36,11 @@ class MinHeap:
         self.min_up_heapify(index)
         self.min_heapify(index)
 
+    def pop(self):
+        root = self.array[0]
+        self.remove(self.array[0].identity, 0)
+        return root
+
     def min_heapify(self, i):
         # Makes a heap when the item with index i has a right and left
         # subtrees which both are heaps.
@@ -88,3 +93,6 @@ class MinHeap:
 
     def __str__(self):
         return self.array.__str__()
+
+    def __contains__(self, vertex_id):
+        return vertex_id in self.index_table
