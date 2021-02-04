@@ -34,7 +34,7 @@ with open(Constants.map_path, 'r') as map_file:
         roads[id1, id2] = edge
         roads[id2, id1] = edge
 
-
+# Processing requests
 while True:
     vertices = deepcopy(graph)
     edges = deepcopy(roads)
