@@ -16,4 +16,11 @@ class User:
     def print(self):
         for i in self.path:
             print(i.identity, end=' ')
-        print('Duration time:', self.duration_time)
+        print()
+        print(self.duration_time)
+
+    def __str__(self):
+        return 'UID: ' + str(self.UID)
+
+    def __repr__(self):
+        return 'UID: ' + str(self.UID)

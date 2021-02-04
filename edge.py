@@ -55,4 +55,5 @@ class Edge:
         return other.weight >= self.weight
 
     def __str__(self):
-        return 'Head: ' + str(self.head) + ' Tail: ' + str(self.tail)
+        return 'Head: ' + str(self.head.identity) + ' Tail: ' + str(self.tail.identity) + \
+                ' Users: ' + str(self.users)

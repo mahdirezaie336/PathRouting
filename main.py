@@ -52,9 +52,11 @@ while True:
     users.append(User(len(users), time, start_id, end_id))
 
     # Putting each user on their ways
-    for user in range(len(users) - 1):
+    for user in users:
+        if user == users[-1]:
+            continue
         edge_to_put = None
-        user_time = user.time
+        user_time = time
         # Moving on user path
         for i in range(len(user.path) - 1):
             id1 = user.path[i].identity
@@ -63,9 +65,12 @@ while True:
             if user_time <= edge.get_weight() * 120:
                 edge_to_put = edge
                 break
-            user_time -= edge.get_weight()
+            user_time -= edge.get_weight() * 120
         if edge_to_put is not None:
             edge_to_put.users.append(user)
+
+    for e in edges:
+        print(edges[e])
 
     # Finding best way for the last user using Dijkstra algorithm
     heap.modify(start_id, 0)
@@ -88,5 +93,5 @@ while True:
         users[-1].path.append(vertex)
 
     set_user_path(last_node)
-    users[-1].duration_time = last_node.value
+    users[-1].duration_time = last_node.value * 120
     users[-1].print()
