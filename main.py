@@ -92,6 +92,11 @@ while True:
     users[-1].duration_time = last_node.value * 120
     users[-1].print()
 
+    # Change plot background color
+    fig, ax = plt.subplots(nrows=1, ncols=1)
+    fig.set_facecolor('#f2efe9')
+
+    # Plotting whole graph
     odd = True
     for e in edges:
         if odd:
@@ -105,6 +110,7 @@ while True:
             plt.annotate(str(edges[e].tail.identity), (x2, y2), fontsize=8)
         odd = not odd
 
+    # Plotting path for user
     for i in range(len(users[-1].path) - 1):
         x1 = users[-1].path[i].x
         y1 = users[-1].path[i].y
