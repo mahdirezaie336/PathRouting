@@ -4,31 +4,30 @@ from edge import Edge
 from copy import deepcopy
 from constants import Constants
 from user import User
-import heapq
-import time
+import matplotlib.pyplot as plt
 
 
 users = []
+graph = []
+verts = {}
+roads = {}
 
 
 def get_vertex(Id):
-    for i in graph:
-        if i.identity == Id:
-            return i
-    raise Exception('From routing program: Vertex not found!')
+    return verts[Id]
 
 
 # Reading map file
 with open(Constants.map_path, 'r') as map_file:
     n, m = [int(i) for i in map_file.readline().split()]
-    graph = [Vertex(0, 0, 0)] * n
-    roads = {}
 
     # Reading vertices
     for i in range(n):
         identity, y, x = (float(i) for i in map_file.readline().split())
         identity = int(identity)
-        graph[i] = Vertex(identity, y, x)
+        vertex = Vertex(identity, y, x)
+        graph.append(vertex)
+        verts[identity] = vertex
 
     # Reading edges
     for i in range(m):
@@ -69,9 +68,6 @@ while True:
         if edge_to_put is not None:
             edge_to_put.users.append(user)
 
-    for e in edges:
-        print(edges[e])
-
     # Finding best way for the last user using Dijkstra algorithm
     heap.modify(start_id, 0)
     last_node = None
@@ -95,3 +91,24 @@ while True:
     set_user_path(last_node)
     users[-1].duration_time = last_node.value * 120
     users[-1].print()
+
+    odd = True
+    for e in edges:
+        if odd:
+            x1 = edges[e].head.x
+            x2 = edges[e].tail.x
+            y1 = edges[e].head.y
+            y2 = edges[e].tail.y
+            plt.plot([x1, x2], [y1, y2], marker='o', color='#AAAAAA')
+            plt.annotate(str(edges[e].head.identity), (x1, y1), font='Arial')
+            plt.annotate(str(edges[e].tail.identity), (x2, y2), font='Arial')
+        odd = not odd
+
+    for i in range(len(users[-1].path) - 1):
+        x1 = users[-1].path[i].x
+        y1 = users[-1].path[i].y
+        x2 = users[-1].path[i + 1].x
+        y2 = users[-1].path[i + 1].y
+        plt.plot([x1, x2], [y1, y2], marker='o', color='#f8530c')
+
+    plt.show()
