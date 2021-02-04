@@ -83,11 +83,13 @@ while True:
                 neighbour.prev = current
         last_node = current
 
-    def set_user_path(vertex):
-        if vertex.prev is not None:
-            set_user_path(vertex.prev)
-        users[-1].path.append(vertex)
+    # Recursive function to get path
+    def set_user_path(node):
+        if node.prev is not None:
+            set_user_path(node.prev)
+        users[-1].path.append(node)
 
+    # Add change user path
     set_user_path(last_node)
     users[-1].duration_time = last_node.value * 120
     users[-1].print()
