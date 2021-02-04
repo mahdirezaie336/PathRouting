@@ -55,7 +55,7 @@ while True:
         if user == users[-1]:
             continue
         edge_to_put = None
-        user_time = time
+        user_time = time - user.start_time
         # Moving on user path
         for i in range(len(user.path) - 1):
             id1 = user.path[i].identity
@@ -66,6 +66,7 @@ while True:
                 break
             user_time -= edge.get_weight() * 120
         if edge_to_put is not None:
+            user.remain_time = user_time
             edge_to_put.users.append(user)
 
     # Finding best way for the last user using Dijkstra algorithm
@@ -119,5 +120,24 @@ while True:
         x2 = users[-1].path[i + 1].x
         y2 = users[-1].path[i + 1].y
         plt.plot([x1, x2], [y1, y2], marker='o', color='#f8530c')
+
+    # Plotting other users
+    for e in edges:
+        for user in edges[e].users:
+            for point in user.path:
+                if point == edges[e].tail:
+                    x0 = edges[e].tail.x
+                    y0 = edges[e].tail.y
+                    x1 = edges[e].head.x
+                    y1 = edges[e].head.y
+                elif point == edges[e].head:
+                    x1 = edges[e].tail.x
+                    y1 = edges[e].tail.y
+                    x0 = edges[e].head.x
+                    y0 = edges[e].head.y
+            x = (x0 - x1) * user.remain_time/120/edges[e].get_weight() + x1
+            y = (y0 - y1) * user.remain_time/120/edges[e].get_weight() + y1
+            plt.plot(x, y, marker='v', color='g')
+            plt.annotate('UID:' + str(user.UID), (x, y), fontsize=6)
 
     plt.show()

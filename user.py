@@ -12,6 +12,7 @@ class User:
         self.end = end
         self.path = []
         self.duration_time = float('inf')
+        self.remain_time = 0
 
     def print(self):
         for i in self.path:
@@ -23,4 +24,4 @@ class User:
         return 'UID: ' + str(self.UID)
 
     def __repr__(self):
-        return 'UID: ' + str(self.UID)
+        return 'UID: ' + str(self.UID) + ' remain time: ' + str(self.remain_time)
