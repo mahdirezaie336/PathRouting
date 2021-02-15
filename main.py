@@ -88,7 +88,7 @@ while True:
 
     # Add change user path
     set_user_path(last_node)
-    users[-1].duration_time = last_node.value * 120
+    users[-1].duration_time = last_node.value * 6000 / Constants.speed
     users[-1].print()
 
     # Change plot background color
